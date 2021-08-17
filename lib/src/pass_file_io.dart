@@ -82,18 +82,22 @@ class PassFileIO {
   // ignore: public_member_api_docs
   Future<PassFile> saveFromPath({required File externalPassFile}) async {
     final passId = _generatePassId();
-    final Directory passesDir = await _getPassesDir();
-    final passDir = Directory(path.withoutExtension(externalPassFile.path));
-    if (passesDir.path == path.dirname(externalPassFile.path)) {
-      throw Exception('This file has already been saved.');
-    }
+    final passFile = await _createPass(passId: passId);
+    final passDir = Directory(path.withoutExtension(passFile.path));
+    //final Directory passesDir = await _getPassesDir();
+    //final passDir = Directory(path.withoutExtension(externalPassFile.path));
+    //if (passesDir.path == path.dirname(externalPassFile.path)) {
+      //throw Exception('This file has already been saved.');
+    //}
     if (externalPassFile.existsSync()) {
-      externalPassFile.copySync('${passesDir.path}/$passId.passkit');
-      await _unpackPass(passPath: '${passesDir.path}/$passId.passkit');
+      //externalPassFile.copySync('${passesDir.path}/$passId.passkit');
+      //await _unpackPass(passPath: '${passesDir.path}/$passId.passkit');
+      externalPassFile.copySync(passFile.path);
+      await _unpackPass(passPath: passFile.path);
       return PassParser(
         passId: passId,
         unpackedPassDirectory: passDir,
-        passFile: externalPassFile,
+        passFile: passFile,
       ).parse();
     }
     throw Exception('Unable to fetch pass file at specified path');
