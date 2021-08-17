@@ -26,6 +26,11 @@ class Pass {
     return PassFileIO().getAllSaved();
   }
 
+  /// Save pass file from External file to internal memory, parse and return [PassFile]
+  Future<PassFile> saveFromPath({required File externalPassFile}) async {
+    return PassFileIO().saveFromPath(externalPassFile: externalPassFile);
+  }
+
   /// Save pass file from [url] to internal memory, parse and return [PassFile]
   Future<PassFile> saveFromUrl({required String url}) async {
     return PassFileIO().saveFromUrl(url: url);
