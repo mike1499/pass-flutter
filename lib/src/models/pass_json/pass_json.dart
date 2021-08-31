@@ -45,8 +45,17 @@ class PassJson extends Equatable {
   });
 
   /// Convert from json
-  factory PassJson.fromJson(Map<String, dynamic> json) =>
-      _$PassJsonFromJson(json);
+  //factory PassJson.fromJson(Map<String, dynamic> json) =>
+      //_$PassJsonFromJson(json);
+
+  /// Convert from json
+  factory PassJson.fromJson(Map<String, dynamic> json) {
+    if (!json.containsKey('labelColor')) {
+      json['labelColor'] = 'rgb(255,255,255)';
+    }
+    return _$PassJsonFromJson(json);
+  }
+      
 
   // Standart keys
 
